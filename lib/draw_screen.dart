@@ -1,8 +1,12 @@
 import 'dart:io';
-import 'dart:ui';
-
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter/rendering.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'result.dart';
 
 class Draw extends StatefulWidget {
   @override
@@ -27,6 +31,54 @@ class _DrawState extends State<Draw> {
   ];
   @override
   Widget build(BuildContext context) {
+    GlobalKey _containerKey = GlobalKey();
+    StorageReference storageReference = FirebaseStorage().ref();
+    bool loading = false;
+    String url;
+
+    // Widget urlProvider(String url) {
+    //   return AlertDialog(
+    //     title: Text("Image URL"),
+    //     content: Text(url),
+    //     actions: [
+    //       FlatButton(
+    //         onPressed: () {
+    //           Clipboard.setData(
+    //             ClipboardData(text: url),
+    //           );
+    //         },
+    //         child: Text("Copy to Clipboard"),
+    //       ),
+    //     ],
+    //   );
+    // }
+
+    void convertWidgetToImage() async {
+      RenderRepaintBoundary renderRepaintBoundary =
+          _containerKey.currentContext.findRenderObject();
+      ui.Image boxImage = await renderRepaintBoundary.toImage(pixelRatio: 1);
+      ByteData byteData =
+          await boxImage.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List uInt8List = byteData.buffer.asUint8List();
+      // setState(() {
+      //   loading = true;
+      // });
+      StorageUploadTask storageUploadTask = storageReference
+          .child("IMG_${DateTime.now().millisecondsSinceEpoch}.png")
+          .putData(uInt8List);
+
+      // await storageUploadTask.onComplete;
+      var dowurl =
+          await (await storageUploadTask.onComplete).ref.getDownloadURL();
+      url = dowurl.toString();
+      imageUrl = url;
+      setState(() {
+        loading = false;
+      });
+      // urlProvider(url);
+      Navigator.pushNamed(context, Result.id);
+    }
+
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -78,6 +130,23 @@ class _DrawState extends State<Draw> {
                               points.clear();
                             });
                           }),
+                      RaisedButton(
+                        onPressed: () async {
+                          convertWidgetToImage();
+                          // print(await url);
+                          setState(() {
+                            loading = true;
+                          });
+                        },
+                        child: Text(
+                          "UPLOAD",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        color: Colors.black,
+                      ),
                     ],
                   ),
                   Visibility(
@@ -108,42 +177,54 @@ class _DrawState extends State<Draw> {
               ),
             )),
       ),
-      body: GestureDetector(
-        onPanUpdate: (details) {
-          setState(() {
-            RenderBox renderBox = context.findRenderObject();
-            points.add(DrawingPoints(
-                points: renderBox.globalToLocal(details.globalPosition),
-                paint: Paint()
-                  ..strokeCap = strokeCap
-                  ..isAntiAlias = true
-                  ..color = selectedColor.withOpacity(opacity)
-                  ..strokeWidth = strokeWidth));
-          });
-        },
-        onPanStart: (details) {
-          setState(() {
-            RenderBox renderBox = context.findRenderObject();
-            points.add(DrawingPoints(
-                points: renderBox.globalToLocal(details.globalPosition),
-                paint: Paint()
-                  ..strokeCap = strokeCap
-                  ..isAntiAlias = true
-                  ..color = selectedColor.withOpacity(opacity)
-                  ..strokeWidth = strokeWidth));
-          });
-        },
-        onPanEnd: (details) {
-          setState(() {
-            points.add(null);
-          });
-        },
-        child: CustomPaint(
-          size: Size.infinite,
-          painter: DrawingPainter(
-            pointsList: points,
+      // body: RepaintBoundary(
+      //   key: _containerKey,
+      body: Stack(
+        children: <Widget>[
+          GestureDetector(
+            onPanUpdate: (details) {
+              setState(() {
+                RenderBox renderBox = context.findRenderObject();
+                points.add(DrawingPoints(
+                    points: renderBox.globalToLocal(details.globalPosition),
+                    paint: Paint()
+                      ..strokeCap = strokeCap
+                      ..isAntiAlias = true
+                      ..color = selectedColor.withOpacity(opacity)
+                      ..strokeWidth = strokeWidth));
+              });
+            },
+            onPanStart: (details) {
+              setState(() {
+                RenderBox renderBox = context.findRenderObject();
+                points.add(DrawingPoints(
+                    points: renderBox.globalToLocal(details.globalPosition),
+                    paint: Paint()
+                      ..strokeCap = strokeCap
+                      ..isAntiAlias = true
+                      ..color = selectedColor.withOpacity(opacity)
+                      ..strokeWidth = strokeWidth));
+              });
+            },
+            onPanEnd: (details) {
+              setState(() {
+                points.add(null);
+              });
+            },
+            child: RepaintBoundary(
+              key: _containerKey,
+              child: CustomPaint(
+                size: Size.infinite,
+                painter: DrawingPainter(
+                  pointsList: points,
+                ),
+              ),
+            ),
           ),
-        ),
+          (loading) ? Center(child: CircularProgressIndicator(strokeWidth: 5,)) : Center(),
+          // ),
+          // ),
+        ],
       ),
     );
   }
@@ -233,7 +314,8 @@ class DrawingPainter extends CustomPainter {
         offsetPoints.add(pointsList[i].points);
         offsetPoints.add(Offset(
             pointsList[i].points.dx + 0.1, pointsList[i].points.dy + 0.1));
-        canvas.drawPoints(PointMode.points, offsetPoints, pointsList[i].paint);
+        canvas.drawPoints(
+            ui.PointMode.points, offsetPoints, pointsList[i].paint);
       }
     }
   }

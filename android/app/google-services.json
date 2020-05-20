@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "347157093652",
+    "firebase_url": "https://collegenotes-b5c3a.firebaseio.com",
+    "project_id": "collegenotes-b5c3a",
+    "storage_bucket": "collegenotes-b5c3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347157093652:android:58b96471e7217adac6b601",
+        "android_client_info": {
+          "package_name": "com.collegenotes.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347157093652-574mrui6de4coo9554aamqihbvhhf9r8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv66dphkqzGOfuzxY_prQ-omf0rBoGLSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347157093652-574mrui6de4coo9554aamqihbvhhf9r8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347157093652:android:0c1195ed16c51712c6b601",
+        "android_client_info": {
+          "package_name": "tech.siddharthsaini.paint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347157093652-574mrui6de4coo9554aamqihbvhhf9r8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv66dphkqzGOfuzxY_prQ-omf0rBoGLSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347157093652-574mrui6de4coo9554aamqihbvhhf9r8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
