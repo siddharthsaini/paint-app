@@ -1,6 +1,6 @@
 # Flutter Paint App
 
-Using thr paint app you can draw free hand images as well as signatures and upload them to Firebase Storage.
+Using the paint app you can draw free hand images as well as signatures and upload them to Firebase Storage.
 
 ## Getting Started
 
