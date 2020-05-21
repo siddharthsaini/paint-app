@@ -9,6 +9,16 @@ Using thr paint app you can draw free hand images as well as signatures and uplo
   <img src="https://raw.githubusercontent.com/sidxharth/paint-app/master/1.JPG">
 </p>
 2. Use your entered application id to connect your app to firebase, enter it to generate your google-services.json file.
+<p>
+  <img src="https://raw.githubusercontent.com/sidxharth/paint-app/master/2.JPG">
+</p>
 3. Replace the google-services.json file in android/app/ directory with you own Firebase generated google-services.json file.
+<p>
+  <img src="https://raw.githubusercontent.com/sidxharth/paint-app/master/3.JPG">
+  <img src="https://raw.githubusercontent.com/sidxharth/paint-app/master/4.JPG">
+</p>
 4. Setup your firebase storage.
+<p>
+  <img src="https://raw.githubusercontent.com/sidxharth/paint-app/master/5.JPG">
+</p>
 5. Run app
