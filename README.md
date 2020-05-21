@@ -1,16 +1,11 @@
-# paint
+# Flutter Paint App
 
-A new Flutter project.
+Using thr paint app you can draw free hand images as well as signatures and upload them to Firebase Storage.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Change applicationId "tech.siddharthsaini.paint" to your own id in android/app/build.gradle file
+2. Use your entered application id to connect your app to firebase, enter it to generate your google-services.json file.
+3. Replace the google-services.json file in android/app/ directory with you own Firebase generated google-services.json file.
+4. Setup your firebase storage.
+5. Run app
