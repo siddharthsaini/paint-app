@@ -21,7 +21,7 @@ Using thr paint app you can draw free hand images as well as signatures and uplo
 <p>
   <img src="https://raw.githubusercontent.com/sidxharth/paint-app/master/6.JPG">
 </p>
-5. Run app, draw something and on pressing UPLOAD button, the drawign gets uploaded to firebase storage.
+5. Run app, draw something and on pressing UPLOAD button, the drawing gets uploaded to firebase storage.
 <p>
   <img src="https://raw.githubusercontent.com/sidxharth/paint-app/master/5.JPG">
 </p>
